@@ -18,9 +18,14 @@ const slides = [
 ]
 
 
+
+compteur = 0
+
 const left = document.querySelector('.arrow_left');
 const right = document.querySelector('.arrow_right');
-compteur = 0
+
+dotsCreator();
+
 
 right.addEventListener("click", function ()  {
 	compteur += 1;
@@ -46,3 +51,11 @@ left.addEventListener("click", function ()  {
     }
 })
 
+function dotsCreator(){
+	const dots = document.querySelector(".dots");	
+   for (let index = 0; index < slides.length; index++) {
+	   const dot= document.createElement("div");
+	   dot.setAttribute("class", "dot");
+	   dots.appendChild(dot);
+   } 
+}
