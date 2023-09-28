@@ -19,43 +19,57 @@ const slides = [
 
 
 
-compteur = 0
+let compteur = 0
 
 const left = document.querySelector('.arrow_left');
 const right = document.querySelector('.arrow_right');
+const dots = document.querySelector(".dots");
+const image = document.querySelector('.banner-img')
+const tag = document.querySelector('#banner p')
+
 
 dotsCreator();
+dotsUpdate();
 
-
-right.addEventListener("click", function ()  {
+right.addEventListener("click", function () {
 	compteur += 1;
 	if (compteur >= slides.length) {
-		compteur = 0; 
+		compteur = 0;
 	}
+	updateSlide()
+})
+
+left.addEventListener("click", function () {
+	compteur -= 1;
+	if (compteur < 0) {
+		compteur = slides.length - 1;
+	}
+	updateSlide()
+})
+
+const updateSlide = () => {
 	const slide = slides[compteur];
-	if (slide) {
-		const img = slide.image;
-		console.log(img);
+	// image.src = "./assets/images/slideshow/" + slide.image;
+	image.setAttribute('src', `./assets/images/slideshow/${slide.image}`)
+	tag.innerHTML = slide.tagLine
+	
+	const updateDot = document.querySelectorAll('.dot_selected')
+}
+
+function dotsCreator() {
+	for (let index = 0; index < slides.length; index++) {
+		const dot = document.createElement("div");
+		dot.setAttribute("class", "dot");
+		dots.appendChild(dot);
 	}
-})
+}
 
-left.addEventListener("click", function ()  {
-	compteur -=1;
-    if (compteur < 0) {
-        compteur = slides.length -1;
-    }
-    const slide = slides[compteur];
-    if (slide) {
-        const img = slide.image;
-        console.log(img);
-    }
-})
-
-function dotsCreator(){
-	const dots = document.querySelector(".dots");	
-   for (let index = 0; index < slides.length; index++) {
-	   const dot= document.createElement("div");
-	   dot.setAttribute("class", "dot");
-	   dots.appendChild(dot);
-   } 
+function dotsUpdate() {
+	const dotPoints = document.querySelectorAll(".dot");
+	for (let index = 0; index < dotPoints.length; index++) {
+		const dot = dotPoints[index];
+		if (index == compteur) {
+			dot.classList.add('dot_selected');
+		} 
+	}
 }
