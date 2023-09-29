@@ -24,6 +24,7 @@ let compteur = 0
 const left = document.querySelector('.arrow_left');
 const right = document.querySelector('.arrow_right');
 const dots = document.querySelector(".dots");
+const dot = document.querySelector(".dot");
 const image = document.querySelector('.banner-img')
 const tag = document.querySelector('#banner p')
 
@@ -31,29 +32,42 @@ const tag = document.querySelector('#banner p')
 dotsCreator();
 dotsUpdate();
 
+const updateDot = () => {
+	const dotElements = document.querySelectorAll('.dot');
+  
+	dotElements.forEach((dot, index) => {
+	  if (index === compteur) {
+		dot.classList.add('dot_selected');
+	  } else {
+		dot.classList.remove('dot_selected');
+	  }
+	});
+  };
+
 right.addEventListener("click", function () {
 	compteur += 1;
 	if (compteur >= slides.length) {
-		compteur = 0;
+	  compteur = 0;
 	}
-	updateSlide()
-})
+	updateSlide();
+	updateDot();
+  });
 
 left.addEventListener("click", function () {
 	compteur -= 1;
 	if (compteur < 0) {
-		compteur = slides.length - 1;
+	  compteur = slides.length - 1;
 	}
-	updateSlide()
-})
+	updateSlide();
+	updateDot();
+  });
 
 const updateSlide = () => {
 	const slide = slides[compteur];
 	// image.src = "./assets/images/slideshow/" + slide.image;
 	image.setAttribute('src', `./assets/images/slideshow/${slide.image}`)
 	tag.innerHTML = slide.tagLine
-	
-	const updateDot = document.querySelectorAll('.dot_selected')
+
 }
 
 function dotsCreator() {
@@ -70,6 +84,8 @@ function dotsUpdate() {
 		const dot = dotPoints[index];
 		if (index == compteur) {
 			dot.classList.add('dot_selected');
-		} 
+		}
 	}
 }
+
+
